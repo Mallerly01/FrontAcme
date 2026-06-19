@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-body">
+    <div class="card border-primary mb-3 text-center">
+      <div class="card-header">Lista de Productos</div>
+      <div class="card-body text-primary">
+        <div class="table-responsive">
+          @if (products() && products().length){
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <button class="btn btn-primary" (click)="toggleImage()">
+                    <i class="bi bi-eye"></i>
+                    {{ showImage ? 'Ocultar' : 'Mostrar'}} Imagenes
+                  </button>
+                </th>
+                <th>Producto</th>
+                <th>Codigo</th>
+                <th>Disponible</th>
+                <th>Precio</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (producto of products(); track producto) {
+              <tr>
+                <td>
+                  @if(showImage){
+                  <img [src]="producto.imageUrl | defaultImage" [title]="producto.productName | uppercase"
+                    [style.width.px]="imageWidth" [style.height.px]="imageHeight" [style.margin.px]="imageMargin"
+                    (error)="producto.imageUrl = ''">
+                  }
+                </td>
+                <td>{{ producto.productName }}</td>
+                <td>{{ producto.productCode }}</td>
+                <td>{{ producto.releaseDate }}</td>
+                <td>${{ producto.price }}</td>
+                <td>
+                  <app-star [rating]="producto.starRating"></app-star>
+                </td>
+                <td>
+                  <button class="btn btn-success" (click)="viewProduct(producto.productId)">
+                    <i class="bi bi-eye"></i> Ver
+                  </button>
+                  &nbsp;
+                  <button class="btn btn-warning" (click)="editProduct(producto.productId, producto)">
+                    <i class="bi bi-pencil"></i> Editar
+                  </button>
+                  &nbsp;
+                  <button class="btn btn-danger" (click)="deleteProduct(producto.productId)">
+                    <i class="bi bi-trash"></i> Borrar
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          }@else{
+          <p>No hay productos disponibles.</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
