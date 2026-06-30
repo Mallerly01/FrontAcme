@@ -33,7 +33,33 @@ export class Auth {
         localStorage.setItem('usuario', JSON.stringify(resp.usuario));
         this.isAutenticated.set(true);
         this.router.navigate(['/home']);
+        return resp;
       })
     );
   }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string) {
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, password });
+  }
+
+  public loginGoogle(token: string){
+    const header = { 'Content-Type': `application/json` };
+    let googleToken = {googletoken: token};
+    return this.http.post(`${this.apiUrl}/google-login`, googleToken, {headers: header}).pipe(
+      map((resp: any) => {
+        console.log('Login with Google successful:', resp);
+        localStorage.setItem('token', resp.token);
+        localStorage.setItem('usuario', JSON.stringify(resp.usuario));
+        this.isAutenticated.set(true);
+        this.router.navigate(['/home']);
+        return resp;
+      })
+    );
+
+  }
+
 }

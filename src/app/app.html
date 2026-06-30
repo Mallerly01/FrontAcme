@@ -11,7 +11,7 @@
 
 <body>
   <div class="d-flex" id="wrapper">
-    @if(authService.isAutenticated()){
+    @if(authService.isAutenticated() && !esRutaPublica()){
     <!-- Sidebar -->
     <!----------------------------------------------------->
     <div class="bg-light border-end" id="sidebar-wrapper">
@@ -43,7 +43,8 @@
               <li><a [routerLink]="['products-pagination']"> Informes</a></li>
             </ul>
           </li>
-          <li> <a href="#"><i class="bi bi-speedometer"></i><span class="nav-label">Dashboard</span></a> </li>
+          <li> <a [routerLink]="['products-sales']"><i class="bi bi-speedometer"></i><span
+                class="nav-label">Dashboard</span></a> </li>
           <li> <a href="#" data-bs-toggle="collapse" data-bs-target="#usuarios" class="collapsed active"><i
                 class="bi bi-person"></i> <span class="nav-label">Usuarios</span><span
                 class="bi bi-chevron-right"></span></a>
@@ -62,7 +63,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
-      @if(authService.isAutenticated()){
+      @if(authService.isAutenticated() && !esRutaPublica()){
       <!-- Superior Bar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 
